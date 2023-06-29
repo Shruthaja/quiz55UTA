@@ -25,9 +25,18 @@ def user():
         print(pas)
         con=str(open("conditions.txt", "r").read())
         con=con.split(" ")
-        regex = re.compile(r'[A-Z]{2}[0-9]{1,}[a-zA-Z]{0,}[#@+%-]{1}')
+        print(con)
+        l1=int(con[0])
+        l2=int(con[1])
+        if(len(pas)<l1 or len(pas)>l2):
+            result="Length does not meet requirements"
+        regex = re.compile(r'[A-Z]{2,}[0-9]{1,}[A-Za-z]{0,}[#@+%-]{1,}')
         match = regex.match(pas)
-    return render_template('index.html',result1=match)
+        if(match==None):
+            result=result+" does not meet pattern requirement"
+        if(result==""):
+            result="password ok"
+    return render_template('index.html',result1=result)
 
 if __name__ == '__main__':
     app.run(debug=True)
