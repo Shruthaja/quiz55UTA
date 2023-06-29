@@ -30,12 +30,18 @@ def user():
         l2=int(con[1])
         if(len(pas)<l1 or len(pas)>l2):
             result="Length does not meet requirements"
-        regex = re.compile(r'[A-Z]{2,}[0-9]{1,}[A-Za-z]{0,}[#@+%-]{1,}')
-        match = regex.match(pas)
-        if(match==None):
-            result=result+" does not meet pattern requirement"
+        pat=['#','@','+','-','%']
+        for i in pat:
+            if i in pas:
+                result=result+"password ok"
         if(result==""):
-            result="password ok"
+            result=result+" pattern not matching"
+        notallowed=['!','$','*']
+        for i in range(2,len(con)):
+            notallowed.append(con[i])
+        for i in notallowed:
+            if i in pas:
+                result="contains not allowed patterns"
     return render_template('index.html',result1=result)
 
 if __name__ == '__main__':
