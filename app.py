@@ -25,7 +25,7 @@ def user():
         print(pas)
         con=str(open("conditions.txt", "r").read())
         con=con.split(" ")
-        regex = re.compile(r'[A-Z]{2}[0-9]{1,}[a-zA-Z]{0,}[#@+%]{1}')
+        regex = re.compile(r'[A-Z]{2}[0-9]{1,}[a-zA-Z]{0,}[#@+%-]{1}')
         match = regex.match(pas)
     return render_template('index.html',result1=match)
 
