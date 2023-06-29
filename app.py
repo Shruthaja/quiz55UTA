@@ -15,6 +15,18 @@ def index():
         f.close()
         result=str(open("conditions.txt","r").read())
     return render_template('index.html',result=result)
+@app.route('/user', methods=['GET', 'POST'])
+def user():
+    result = ""
+    if request.method == "POST":
+        pas=request.form['userpass']
+        con=str(open("conditions.txt", "r").read())
+        # con=con.split(" ")
+        con=con[3:]
+        for i in con:
+            if pas.find(i):
+                result="invalid pass : "+i
+    return render_template('index.html',result1=result)
 
 if __name__ == '__main__':
     app.run(debug=True)
