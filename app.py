@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -15,18 +17,17 @@ def index():
         f.close()
         result=str(open("conditions.txt","r").read())
     return render_template('index.html',result=result)
-@app.route('/user', methods=['GET', 'POST'])
+@app.route('/user.html', methods=['POST'])
 def user():
     result = ""
     if request.method == "POST":
         pas=request.form['userpass']
+        print(pas)
         con=str(open("conditions.txt", "r").read())
-        # con=con.split(" ")
-        con=con[3:]
-        for i in con:
-            if pas.find(i):
-                result="invalid pass : "+i
-    return render_template('index.html',result1=result)
+        con=con.split(" ")
+        regex = re.compile(r'[A-Z]{2}[0-9]{1,}[a-zA-Z]{0,}[#@+%]{1}')
+        match = regex.match(pas)
+    return render_template('index.html',result1=match)
 
 if __name__ == '__main__':
     app.run(debug=True)
